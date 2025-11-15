@@ -5,12 +5,16 @@ import api from "../axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 const ViewProducts = () => {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.productData);
 
   const [editingProduct, setEditingProduct] = useState(null);
-  const [filters, setFilters] = useState({ title: "", category: "", brand: "" });
+  const [filters, setFilters] = useState({
+    title: "",
+    category: "",
+    brand: "",
+  });
 
   const fetchAllProducts = async () => {
     try {
@@ -26,7 +30,8 @@ const ViewProducts = () => {
   }, [filters]);
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    if (!window.confirm("Are you sure you want to delete this product?"))
+      return;
     try {
       await api.delete(`/product/${id}`);
       alert("Deleted successfully!");
@@ -50,15 +55,15 @@ const ViewProducts = () => {
       console.error("Error updating product:", error);
     }
   };
-const handleAddToCart = async (productId) => {
-  try {
-    const res = await api.post("/cart/add", { productId, quantity: 1 });
-    alert("Added to cart");
-  } catch (error) {
-    console.error(error);
-    alert("Error adding to cart");
-  }
-};
+  const handleAddToCart = async (productId) => {
+    try {
+      const res = await api.post("/cart/add", { productId, quantity: 1 });
+      alert("Added to cart");
+    } catch (error) {
+      console.error(error);
+      alert("Error adding to cart");
+    }
+  };
 
   return (
     <div className="p-8 bg-gray-50 min-h-screen">
@@ -176,16 +181,20 @@ const handleAddToCart = async (productId) => {
                   Delete
                 </button>
                 <button
-  onClick={() => handleAddToCart(p._id)}
-  className="bg-green-500 text-white px-3 py-1 rounded-md"
->
-  Add to Cart
-</button>
-
+                  onClick={() => handleAddToCart(p._id)}
+                  className="bg-green-500 text-white px-3 py-1 rounded-md"
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))}
-      <button onClick={()=>navigate('/cart')} className="text-green-600 font-bold">View Carts</button>
+          <button
+            onClick={() => navigate("/cart")}
+            className="text-green-600 font-bold"
+          >
+            View Carts
+          </button>
         </div>
       )}
     </div>
