@@ -27,7 +27,7 @@ const Login = () => {
         return;
       }
 
-      const response = await api.post("auth/Login", userInfo);
+      const response = await api.post("/auth/login", userInfo);
       console.log("login response:", response.data);
 
       dispatch(userLogin(response.data));
@@ -51,7 +51,7 @@ const Login = () => {
   };
   return (
     <div>
-      <h1>Hello, {user ? user.user.name : "..."}</h1>
+      <h1>Hello, {user ? user.name : "..."}</h1>
 
       <div className="flex justify-center items-center  ">
         <div className=" border-4 border-black p-10 bg-red-400 ">
